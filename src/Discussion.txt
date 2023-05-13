@@ -1,0 +1,21 @@
+
+    # Parse request
+    # Init Graph object
+    # Get path
+
+    # Model
+        # Algorithm
+        # Graph
+
+    # Controller - server
+    
+    # Graph class
+        # Init, some methods, getPath method
+
+    # Algorithm interface
+        # Dijkstra, A* classes inherit
+
+    # README, Comments
+    # Testcases
+
+    # Parser class?
