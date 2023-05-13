@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>EleNa</title>
+        <link rel="stylesheet" type="text/css" href = "design.css">
+    </head>
+
+    <body>
+        <h1>EleNa</h1>
+
+        <div id="map"></div>
+
+        <div class = "buttons">
+            <label for = "start">Start:</label>
+            <textarea id="start" rows="1" cols="50"></textarea>
+
+            <label for = "end">End:</label>
+            <textarea id="end" rows="1" cols="50"></textarea>
+
+            <div class="options">
+                <button onclick = "elevation('none')">None</button>
+                <button onclick = "elevation('max_el')">Max Elevation</button>
+                <button onclick = "elevation('min_el')">Min Elevation</button>
+            </div>
+
+            <label for = "distance">Distance%:</label>
+            <textarea id = "distance" rows="1" cols="50"></textarea>           
+        </div>
+
+        <!-- JavaScript file loading below-->
+        <script src="mapper.js"></script>
+
+    </body>
+</html>
