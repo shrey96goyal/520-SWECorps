@@ -1,0 +1,28 @@
+#map {
+    height : 100vh;
+    width : 70%;
+    float : left;
+}
+
+.buttons {
+    float : left;
+    width : 30%;
+    padding-left : 20px;
+    box-sizing: border-box;
+    height : 1.5rem;
+}
+
+.buttons label,
+.buttons textarea,
+.buttons button {
+    display : block;
+    margin-bottom: 10px;
+}
+
+.options button {
+    margin-bottom: 10px;
+}
+
+.buttons #distance {
+    width: 50%;
+  }
