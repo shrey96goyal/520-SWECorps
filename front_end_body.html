@@ -19,9 +19,14 @@
             <textarea id="end" rows="1" cols="25"></textarea>
 
             <div class="options">
-                <button onclick = "elevation('none')">None</button>
-                <button onclick = "elevation('max_el')">Max Elevation</button>
-                <button onclick = "elevation('min_el')">Min Elevation</button>
+                <input type="radio" id="none" name="elevation" value="none">
+                <label for="none">None</label>
+
+                <input type="radio" id="max_el" name="elevation" value="max_el">
+                <label for="max_el">Max Elevation</label>
+
+                <input type="radio" id="min_el" name="elevation" value = "min_el">
+                <label for="min_el">Min Elevation</label>
             </div>
 
             <label for = "distance">Distance%:</label>
