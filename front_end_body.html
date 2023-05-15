@@ -19,6 +19,7 @@
             <textarea id="end" rows="1" cols="25"></textarea>
 
             <div class="options">
+<<<<<<< Updated upstream
                 <input type="radio" id="none" name="elevation" value="none">
                 <label for="none">None</label>
 
@@ -28,9 +29,28 @@
                 <input type="radio" id="min_el" name="elevation" value = "min_el">
                 <label for="min_el">Min Elevation</label>
             </div>
+=======
+                
+                <!--<button onclick = "elevation('none')">None</button>
+                <button onclick = "elevation('max_el')">Max Elevation</button>
+                <button onclick = "elevation('min_el')">Min Elevation</button>-->
+
+                <input type = "radio" id = "none" name = "eleType" value = "none">
+                <label for = "none">None</label>
+
+                <input type = "radio" id = "max_el" name = "eleType" value = "max_el">
+                <label for = "max_el">Max Elevation</label>
+
+                <input type = "radio" id = "min_el" name = "eleType" value = "min_el">
+                <label for = "min_el">Min Elevation</label>
+
+            </div>          
+>>>>>>> Stashed changes
 
             <label for = "distance">Distance%:</label>
-            <textarea id = "distance" rows="1" cols="25"></textarea>           
+            <textarea id = "distance" rows="1" cols="25"></textarea>
+            
+            <button onclick="elevation()">Calculate Elevation</button>
         </div>
 
         <!-- JavaScript file loading below-->

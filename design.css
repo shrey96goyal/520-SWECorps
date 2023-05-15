@@ -1,10 +1,16 @@
 #map {
+<<<<<<< Updated upstream
     width : 70%;
     height : 400px;
+=======
+    height : 600px;
+    width : 75%;
+>>>>>>> Stashed changes
     float : left;
 }
 
 .buttons {
+<<<<<<< Updated upstream
     width : 30%;
     float : right;
     padding : 20px;
@@ -29,6 +35,42 @@
     width: 100%;
     margin-top: 10px;
     max-width: 100px;
+=======
+    float : left;
+    width : 25%;
+    padding-left : 20px;
+    box-sizing: border-box;
+    height : 1.5rem;
+}
+
+.buttons label,
+.buttons textarea,
+.buttons input[type="radio"] {
+    display : block;
+    margin-bottom: 15px;
+}
+
+.options button {
+    margin : 10px 0;
+}
+
+.buttons button {
+    margin-top : 10px;
+    margin-bottom : 10px;
+}
+
+.buttons .options {
+    display: flex;
+}
+
+.buttons #distance {
+    width: 30%;
+}
+
+.options input[type="radio"] {
+    margin-right: 10px;
+    margin-left : 10px;
+>>>>>>> Stashed changes
 }
 
 h1 {
