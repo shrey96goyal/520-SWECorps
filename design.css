@@ -1,41 +1,10 @@
 #map {
-<<<<<<< Updated upstream
-    width : 70%;
-    height : 400px;
-=======
     height : 600px;
     width : 75%;
->>>>>>> Stashed changes
     float : left;
 }
 
 .buttons {
-<<<<<<< Updated upstream
-    width : 30%;
-    float : right;
-    padding : 20px;
-    box-sizing : border-box;
-}
-
-#start,
-#end {
-  display: block;
-  margin-bottom: 20px;
-  width: 100%;
-  max-width: 300px;
-}
-
-.options input[type="radio"] {
-    display: inline-block;
-    margin-bottom: 20px;
-}
-
-  #distance {
-    display: block;
-    width: 100%;
-    margin-top: 10px;
-    max-width: 100px;
-=======
     float : left;
     width : 25%;
     padding-left : 20px;
@@ -70,7 +39,6 @@
 .options input[type="radio"] {
     margin-right: 10px;
     margin-left : 10px;
->>>>>>> Stashed changes
 }
 
 h1 {
