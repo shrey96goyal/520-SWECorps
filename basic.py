@@ -65,7 +65,7 @@ def getGraphForLocation(location):
     locationString = convertLocToStr(location)
     G = ox.graph_from_place(locationString, network_type='drive', simplify=False)
 
-    G1 = ox.add_node_elevations_google(G, '', url_template='https://api.open-elevation.com/api/v1/lookup?locations={}&key={}')
+    # G1 = ox.add_node_elevations_google(G, '', url_template='https://api.open-elevation.com/api/v1/lookup?locations={}&key={}')
     return G
 
 # get_details((19, 73), (19, 73))
@@ -76,6 +76,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
+    
     return "Hello, World!"
 
 @app.route("/salvador")
@@ -85,13 +86,29 @@ def salvador():
 
     return {1:"Hello, Salvador"}
 
+@app.route("/dummy")
+def dummy():
+    eleType = request.args.get("eleType")
+    start = request.args.get("start")
+    end = request.args.get("end")
+    dist = request.args.get("distance")
+
+    l = getCommonLocation([42.343488, -72.502818], [42.377260, -72.519954])
+    print(l)
+    print(convertLocToStr(l))
+    G = getGraphForLocation(l)
+
+    return {"data": ""}
+
+
+
 if __name__ == "__main__":
     l = getCommonLocation([42.343488, -72.502818], [42.377260, -72.519954])
     print(l)
     print(convertLocToStr(l))
     G = getGraphForLocation(l)
     print('hi')
-    # app.run(debug=True, port=5000)
+    app.run(debug=True, port=5000)
     # 66597275
     # 3602737605
 
