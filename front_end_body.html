@@ -6,9 +6,18 @@
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
         integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
         crossorigin=""/>
+
         <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
         integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
         crossorigin=""></script>
+
+        <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+
+        <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
+        <script src="https://unpkg.com/leaflet-control-geocoder-autocomplete/dist/Control.Geocoder.Autocomplete.js"></script>
+
+
         <link rel="stylesheet" type="text/css" href = "design.css">
     </head>
 
@@ -19,10 +28,10 @@
 
         <div class = "buttons">
             <label for = "start">Start:</label>
-            <textarea id="start" rows="1" cols="25"></textarea>
-
+            <input type = "text" id = "start" placeholder="Start" />
+        
             <label for = "end">End:</label>
-            <textarea id="end" rows="1" cols="25"></textarea>
+            <input type="text" id="end" placeholder="End" />       
 
             <div class="options">
 
@@ -41,8 +50,8 @@
 
             </div>          
             <label for = "distance">Distance%:</label>
-            <textarea id = "distance" rows="1" cols="25"></textarea>
-            
+            <input type="number" id="distance" placeholder="Distance" />
+
             <button onclick="elevation()">Calculate Elevation</button>
         </div>
 
