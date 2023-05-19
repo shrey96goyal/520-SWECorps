@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>EleNa</title>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+        integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+        crossorigin=""/>
+
+        <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+        integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+        crossorigin=""></script>
+
+        <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+
+        <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
+        <script src="https://unpkg.com/leaflet-control-geocoder-autocomplete/dist/Control.Geocoder.Autocomplete.js"></script>
+
+
+        <link rel="stylesheet" type="text/css" href = "design.css">
+    </head>
+
+    <body>
+        <h1>EleNa</h1>
+
+        <div id="map"></div>
+
+        <div class = "buttons">
+            <label for = "start">Start:</label>
+            <input type = "text" id = "start" placeholder="Start" />
+        
+            <label for = "end">End:</label>
+            <input type="text" id="end" placeholder="End" />       
+
+            <div class="options">
+
+                <!--<button onclick = "elevation('none')">None</button>
+                <button onclick = "elevation('max_el')">Max Elevation</button>
+                <button onclick = "elevation('min_el')">Min Elevation</button>-->
+
+                <input type = "radio" id = "none" name = "eleType" value = "none">
+                <label for = "none">None</label>
+
+                <input type = "radio" id = "max_el" name = "eleType" value = "max_el">
+                <label for = "max_el">Max Elevation</label>
+
+                <input type = "radio" id = "min_el" name = "eleType" value = "min_el">
+                <label for = "min_el">Min Elevation</label>
+
+            </div>          
+            <label for = "distance">Distance%:</label>
+            <input type="number" id="distance" placeholder="Distance" />
+
+            <button onclick="elevation()">Calculate Elevation</button>
+        </div>
+
+        <!-- JavaScript file loading below-->
+        <script src="mapper.js"></script>
+
+    </body>
+</html>
