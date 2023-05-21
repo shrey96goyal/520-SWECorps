@@ -17,10 +17,11 @@ var marker2 = null;
 
 var start_lat_lng = null;
 var end_lat_lng = null;
+var route = null;
 
 var start_input = document.querySelector('#start');
 var end_input = document.querySelector('#end');
-
+var result = document.getElementById('result');
 
 async function calcBoundingBox(bbox){
  if (location1 == null || location2 == null){
@@ -59,6 +60,10 @@ var start_loc = L.Control.geocoder({
   var loc_name = x.geocode.name;
   start_input.value = loc_name;
   
+  if (route != null){
+    map.removeLayer(route);
+  }
+
   var bbox = x.geocode.bbox;
   location1 = bbox;
   start_lat_lng = lat_long;
@@ -82,6 +87,10 @@ var end_loc = L.Control.geocoder({
   var loc_name = x.geocode.name;
   end_input.value = loc_name;
 
+  if (route != null){
+    map.removeLayer(route);
+  }
+  
   var bbox = x.geocode.bbox;
   location2 = bbox;
   end_lat_lng = lat_long;
@@ -96,58 +105,73 @@ var end_loc = L.Control.geocoder({
   marker2.addTo(map);
 }).addTo(map);
 
+function isNumberKey(evt) {
+  var charCode = (evt.which) ? evt.which : evt.keyCode
+  if (charCode > 31 && (charCode < 48 || charCode > 57))
+    return false;
+  return true;
+}
 
 const elevation = async () => {
 
-    let elevationValue = 0;
-    let elevationElement = document.querySelector("input[name='eleType']:checked");
-    if (elevationElement != null){
-      elevationValue = elevationElement.value;
-    } 
+  // Get selected elevation, Default no elevation
+    let elevationValue = document.querySelector("input[name='eleType']:checked").value;
 
+  // Get input distance percentage, default 0
     let distancePer = document.querySelector("#distance").value;
     if (distancePer == ''){
       distancePer = 0;
     }
 
-    // console.log(elevationValue, distancePer, start_lat_lng, end_lat_lng);
+  // If input latitude, longitude is not entered, raise error and return
+    if (start_lat_lng == null || end_lat_lng == null){
+      result.innerHTML = "Source or destination not entered!";
+      return;
+    }
+
+    console.log("request")
+    console.log(elevationValue, distancePer, start_lat_lng, end_lat_lng);
     requestURL = 'http://127.0.0.1:5000/path?elevation='+elevationValue+'&distance='+distancePer+'&src_lat='+start_lat_lng.lat+'&src_lang='+start_lat_lng.lng;
     requestURL += '&dest_lat='+end_lat_lng.lat+'&dest_lang='+end_lat_lng.lng;
 
-    // console.log(requestURL);
-    // const response = await fetch(requestURL);
-    // const myJson = await response.json(); 
-    const myJson = {"route" : [[42.3434424, -72.5042974, 2, 62.753], [42.3439034, -72.5042604, 2, 61.651], [42.3440327, -72.5042531, 2, 61.783]]};
+    console.log(requestURL);
+    result.innerHTML = "Request sent, waiting for response!";
+  
+  // Call backend API
+    const response = await fetch(requestURL);
 
+  // If API returns 500 response
+    if (response.status == 500){
+      result.innerHTML = "Bad request, server could not return response!";
+      return;
+    }
+
+    const responseJSON = await response.json(); 
+    // responseJSON = {"route" : [[42.3434424, -72.5042974, 2, 62.753], [42.3439034, -72.5042604, 2, 61.651], [42.3440327, -72.5042531, 2, 61.783]], distance:100, elevation:200};
+
+  // If API returns 400 error
+    if (responseJSON.hasOwnProperty("message")) {
+      result.innerHTML = responseJSON.message;
+      return;
+    }
+
+  // If API returns route successfully, show the route on map
     routePoints = [];
-    var routing = L.Routing.control({
-      waypoints:routePoints,
-      draggableWaypoints: false,
-      routeWhileDragging: false,
-      show: false,
-      lineOptions: {
-        addWaypoints: false,
-        styles: [{ color: '#242c81', weight: 2 }]
-      }
-    }).addTo(map);
+    if (route != null){
+      result.innerHTML = "";
+      map.removeLayer(route);
+    }
     
-    for (let x of myJson["route"]) {
-      console.log("sjsnj");
-      console.log(x);
-      point = L.latLng(x[0], x[1]);
-      // console.log(point);
+    for (let x of responseJSON["route"]) {
+      point = [x[0], x[1]];
       routePoints.push(point);
     }
-    // console.log("Route points");
-    // console.log(routePoints);
-    var routing = L.Routing.control({
-      waypoints:routePoints,
-      draggableWaypoints: false,
-      routeWhileDragging: false,
-      show: false,
-      lineOptions: {
-        addWaypoints: false,
-        styles: [{ color: '#242c81', weight: 2 }]
-      }
-    }).addTo(map);
+
+    console.log(routePoints.length);
+    route = L.polyline(routePoints, {color: 'blue'});
+    route.addTo(map);
+    map.fitBounds(route.getBounds());
+
+  // Show result distance and elevation
+    result.innerHTML = "Calculated Distance : "+responseJSON["distance"]+"<br/>Calculated elevation : "+responseJSON["elevation"];  
 }
