@@ -38,15 +38,15 @@ def getNearestNodes(Graph, longitude, latitude):
     return ox.nearest_nodes(Graph, longitude, latitude)
 
 def getShortestRoute(Graph, source, target):
-    route = nx.shortest_path(Graph, source, target, method='dijkstra')
-    print(len(route))
-    print(nx.shortest_path_length(Graph, source, target, method='dijkstra'))
-    return route
+    return ox.distance.shortest_path(Graph, source, target)
 
 def getEdgeLength(Graph, source, target):
     return Graph.get_edge_data(source, target)[0]['length']
 def getEdgeAbsElevation(Graph, source, target):
-    return Graph.get_edge_data(source, target)[0]['grade_abs']
+    elevation = Graph.get_edge_data(source, target)[0]['grade']
+    if elevation < 0:
+        return 0
+    return elevation
 
 def getRouteDistance(Graph, route):
     numNodes = len(route)

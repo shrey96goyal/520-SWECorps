@@ -14,16 +14,16 @@ def path():
     # graph = Graph(42.343488, -72.502818, 42.377260, -72.519954)
     graph = Graph(args)
     if graph.graph is None:
-        return "Too far"
+        return jsonify({'message':"Please give locations within the same city"}), 400
 
     # Path type, x%
     path = graph.getPath()
     if path is None:
-        return "Incorrect distance %"
+        return jsonify({'message':"No path found"}), 400
 
-    routeDistance = getRouteDistance(graph.graph, path)
+    routeDistance = round(getRouteDistance(graph.graph, path))
     latLongRoute = getLatLongForRoute(graph.graph, path)
-    routeElevation = getRouteElevation(graph.graph, path)
+    routeElevation = round(getRouteElevation(graph.graph, path))
 
     # Sample plot
     # routes = [shortest_route, elevationPath]

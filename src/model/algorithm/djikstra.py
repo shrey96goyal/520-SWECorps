@@ -9,12 +9,19 @@ class DjikstraSearch(SearchAlgorithmInterface):
         maxDistance = shortestDistance * (1 + distRestriction)
         print('shortest distance is ' + str(shortestDistance))
         print('max distance is ' + str(maxDistance))
-        s = {}
+        nodeDistAndElev = {}
+        nodeSet = set([])
         openList = [(0,  0, origNode, [origNode])]
         possiblePath = []
         while len(openList) > 0 and openList[0][1] <= maxDistance:
             f, dist, node, path = openList[0]
             openList.pop(0)
+
+            if (node, f, dist) in nodeSet:
+                continue
+
+            nodeSet.add((node, f, dist))
+
             if node == destNode:
                 print('adding')
                 possiblePath = path
@@ -22,7 +29,11 @@ class DjikstraSearch(SearchAlgorithmInterface):
                 if dist <= maxDistance:
                     break
             else:
-                s[node] = (f, dist)
+                if node not in nodeDistAndElev:
+                    nodeDistAndElev[node] = (f, dist)
+                else:
+                    nodeDistAndElev[node] = (min(f, nodeDistAndElev[node][0]), min(dist, nodeDistAndElev[node][1]))
+
                 for edges in G.out_edges(node):
                     nextNode = edges[1]
                     if nextNode in path:
@@ -31,7 +42,7 @@ class DjikstraSearch(SearchAlgorithmInterface):
                     nextDist = dist + getEdgeLength(G, node, nextNode)
                     if nextDist > maxDistance:
                         continue
-                    if nextNode not in s or s[nextNode][0] > nextF or s[nextNode][1] > nextDist:
+                    if nextNode not in nodeDistAndElev or nodeDistAndElev[nextNode][0] > nextF or nodeDistAndElev[nextNode][1] > nextDist:
                         nextNodePath = path.copy()
                         nextNodePath.append(nextNode)
                         openList.append((nextF, nextDist, nextNode, nextNodePath))

@@ -30,8 +30,8 @@ class Graph:
         origNode = getNearestNodes(self.graph, self.sourceLong, self.sourceLat)
         destNode = getNearestNodes(self.graph, self.destLong, self.destLat)
 
-        shortest_route = getShortestRoute(self.graph, origNode, destNode)
-        shortestDistance = getRouteDistance(self.graph, shortest_route)
+        shortestRoute = getShortestRoute(self.graph, origNode, destNode)
+        shortestDistance = getRouteDistance(self.graph, shortestRoute)
 
         if self.pathType == 0:
             isMinElevation = 0
@@ -40,15 +40,14 @@ class Graph:
         else:
             isMinElevation = -1
 
-        startTime = time.time()
         djikstra = DjikstraSearch()
-        djikstraPath = djikstra.search(self.graph, origNode, destNode, shortestDistance, self.distanceRestriction, isMinElevation)
 
+        startTime = time.time()
+        djikstraPath = djikstra.search(self.graph, origNode, destNode, shortestDistance, self.distanceRestriction, isMinElevation)
         djikstraEndTime = time.time()
 
         astar = AStarSearch()
         astarPath = astar.search(self.graph, origNode, destNode, shortestDistance, self.distanceRestriction, isMinElevation)
-
         astarEndTime = time.time()
 
         print('Djikstra runtime is ' + str(djikstraEndTime - startTime))
