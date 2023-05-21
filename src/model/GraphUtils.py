@@ -55,4 +55,19 @@ def getRouteDistance(Graph, route):
         totalDistance += getEdgeLength(Graph, route[i], route[i+1])
     return totalDistance
 
+def getRouteElevation(Graph, route):
+    numNodes = len(route)
+    totalElev = 0
+    for i in range(0, numNodes - 1):
+        totalElev += getEdgeAbsElevation(Graph, route[i], route[i + 1])
+    return totalElev
+
+def getLatLongForRoute(Graph, route):
+    latLongArray = []
+    for node in route:
+        nodeData = Graph.nodes(data = True)[node]
+        latLongArray.append([nodeData['y'], nodeData['x']])
+
+    return latLongArray
+
 # def getAllPaths(Graph, distance_limit, source, target):
