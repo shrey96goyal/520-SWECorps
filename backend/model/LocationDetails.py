@@ -1,5 +1,10 @@
 from geopy.geocoders import Nominatim
 
+'''
+    Converts location object to string.
+    location - Dictionary with city, state and country as keys
+    Returns string in format city, state, country
+'''
 def convertLocToStr(location):
     locationArray = []
     if location['city'] != '':
@@ -13,11 +18,15 @@ def convertLocToStr(location):
 
     return ', '.join(locationArray)
 
-# Latitude, Longitude
-def getCommonLocation(src_point, dest_point):
+'''
+    Computes common city, state, country for given points
+    srcPoint - [latitude, longitude] of latitude
+    destPoint - [latitude, longitude] of longitude
+'''
+def getCommonLocation(srcPoint, destPoint):
     geolocator = Nominatim(user_agent="basicApp3")
-    location_src = geolocator.reverse(str(src_point[0]) + ", " + str(src_point[1]))
-    location_dest = geolocator.reverse(str(dest_point[0]) + ", " + str(dest_point[1]))
+    location_src = geolocator.reverse(str(srcPoint[0]) + ", " + str(srcPoint[1]))
+    location_dest = geolocator.reverse(str(destPoint[0]) + ", " + str(destPoint[1]))
     print("Fetched locations!")
     source = location_src.raw['address']
     dest = location_dest.raw['address']

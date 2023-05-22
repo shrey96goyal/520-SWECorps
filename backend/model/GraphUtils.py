@@ -26,7 +26,7 @@ def getGraphForLocation(location):
         G = ox.load_graphml(location['city'] + '.graphml')
     else:
         locationString = convertLocToStr(location)
-        G = ox.graph_from_place(locationString, network_type='drive', simplify=False)
+        G = ox.graph_from_place(locationString, network_type='drive', simplify=True)
         # Load Elevation Data
         G = ox.elevation.add_node_elevations_google(G, api_key=apiKey)
         G = ox.elevation.add_edge_grades(G)
