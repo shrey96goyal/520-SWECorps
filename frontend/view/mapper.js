@@ -1,3 +1,4 @@
+// Create a map 
 var map = L.map('map').setView([42.343488, -72.502818], 15);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -5,6 +6,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
+// Initialize for logic to zoom in/out depending on markers on the map
 var topleft = null; 
 var topRight = null; 
 var bottomLeft = null; 
@@ -15,14 +17,17 @@ var location2 = null;
 var marker1 = null;
 var marker2 = null;
 
+// Maintain lattude, longitude of source and target
 var start_lat_lng = null;
 var end_lat_lng = null;
 var route = null;
 
+// Getting the text areas for source and target, result label
 var start_input = document.querySelector('#start');
 var end_input = document.querySelector('#end');
 var result = document.getElementById('result');
 
+// Logic to zoom in/out depending on 1 marker or two markers on the map
 async function calcBoundingBox(bbox){
  if (location1 == null || location2 == null){
     var poly = L.polygon([
@@ -51,6 +56,7 @@ async function calcBoundingBox(bbox){
  return poly;
 }
 
+// Logic for adding source location, adding marker for source location, zoom in/out
 var start_loc = L.Control.geocoder({
   defaultMarkGeocode: false,
   geocoder: L.Control.Geocoder.google({apiKey: 'AIzaSyCLWLZWWVKz107DGJoCh64jj0zs8gU9YnU'}),
@@ -78,6 +84,7 @@ var start_loc = L.Control.geocoder({
   marker1.addTo(map);
 }).addTo(map);
 
+// Logic for adding destination location, adding marker for destination location, zoom in/out
 var end_loc = L.Control.geocoder({
   defaultMarkGeocode: false,
   geocoder: L.Control.Geocoder.google({apiKey: 'AIzaSyCLWLZWWVKz107DGJoCh64jj0zs8gU9YnU'}),
@@ -105,6 +112,7 @@ var end_loc = L.Control.geocoder({
   marker2.addTo(map);
 }).addTo(map);
 
+// Input validation for distance percentage textbox
 function isNumberKey(evt) {
   var charCode = (evt.which) ? evt.which : evt.keyCode
   if (charCode > 31 && (charCode < 48 || charCode > 57))
@@ -112,6 +120,7 @@ function isNumberKey(evt) {
   return true;
 }
 
+// Calling backend API, displaying route
 const elevation = async () => {
 
   // Get selected elevation, Default no elevation
