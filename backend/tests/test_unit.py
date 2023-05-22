@@ -12,8 +12,6 @@ from model.graph.Graph import Graph
 
 
 class LocationUtilsTests(unittest.TestCase):
-    # graph = getGraphForLocation('Amherst')
-    # apiKey = 'AIzaSyCLWLZWWVKz107DGJoCh64jj0zs8gU9YnU'
     def testGetCommonLocation(self):
         source = [42.343488, -72.502818]
         dest = [42.377260, -72.519954]
@@ -94,13 +92,9 @@ class GraphUtilsTests(unittest.TestCase):
     commonLocation = getCommonLocation([42.343488, -72.502818], [42.377260, -72.519954])
     graph = getGraphForLocation(commonLocation)
 
-    # Point outside -> 42.360293, -72.539821
-
     def testGetNodeIDForPoint(self):
         nodeId = getNodeIDForPoint(self.graph, 42.343488, -72.502818)
         self.assertEqual(66618411, nodeId)
-        # 1 -> 66618411
-        # 2 -> 66714028
 
     def testGetGraphForLocation(self):
         commonLocation = getCommonLocation([42.343488, -72.502818], [42.377260, -72.519954])

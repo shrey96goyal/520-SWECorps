@@ -1,6 +1,8 @@
 ## Team - SDECorps
 ## 520 Course Project - ELeNa
+The project is about implementing a navigation system that considers the elevation gain. A typical system like Apple or Google Maps just takes the start and end points from the user and presents the shortest distance between them using standard algorithms such as Dijkstra’s or A*.  The goal of this project is to develop a software system that determines a route to minimize/maximize the elevation gain depending on the start and end locations of the user. The elevation gain increment/decrement can change the distance to up to x% of the original shortest route. 
 
+For the purposes of this project, we have used 'drive' as the mode of transport to load the graph using OSMnx.
 <br />
 
 ### 1. Install requirements for running the application
@@ -10,13 +12,9 @@
 #### Navigate to backend/controller and run the following command
 ##### `python server.py`
 
-### 3. In order to perform integration testing of backend
+### 3. In order to perform integration testing of backend and unit testing of backend
 #### Navigate to backend/tests, run following command
 ##### `pytest`
-
-### 4. In order to perform unit testing of backend
-#### Navigate to backend/tests, run following command
-##### `python test_unit.py`
 
 ### 5. To use the application, navigate to frontend/view/
 ##### Open the front_end_body.html in browser
