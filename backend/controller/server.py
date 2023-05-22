@@ -10,6 +10,7 @@ app = Flask(__name__)
 
 @app.route("/path", methods=['GET'])
 def path():
+    print("Received request.")
     # Parse Input request
     args = request.args
     input_elevation = args.get("elevation")
@@ -18,7 +19,6 @@ def path():
     input_src_lang = args.get("src_lang")
     input_dest_lat = args.get("dest_lat")
     input_dest_lang = args.get("dest_lang")
-
     # Allowed evelation options, for validating input
     elevation_allowed_options = ["0", "1", "2"]
 
@@ -43,9 +43,7 @@ def path():
         return jsonify({'message':"No path found"}), 400
 
     # Calculate distance, latitude, longitude, elevation of the resultant route
-    routeDistance = round(getRouteDistance(graph.graph, path), 4)
-    latLongRoute = getLatLongForRoute(graph.graph, path)
-    routeElevation = round(getRouteElevation(graph.graph, path), 4)
+    routeDistance, latLongRoute, routeElevation = path[0], path[1], path[2]
 
 
     return jsonify({'route': latLongRoute,

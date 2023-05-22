@@ -1,4 +1,4 @@
-from ..GraphUtils import getGraphForLocation, getNearestNodes, getRouteDistance, getShortestRoute, getRouteElevation
+from ..GraphUtils import getGraphForLocation, getNearestNodes, getRouteDistance, getShortestRoute, getRouteElevation, getLatLongForRoute
 from ..LocationDetails import getCommonLocation
 from ..algorithm.astar import AStarSearch
 from ..algorithm.djikstra import DjikstraSearch
@@ -6,6 +6,7 @@ import time
 
 class Graph:
     def __init__(self, args):
+        print("Initializing graph")
         self.sourceLat = float(args['src_lat'])
         self.sourceLong = float(args['src_lang'])
         self.destLat = float(args['dest_lat'])
@@ -19,6 +20,7 @@ class Graph:
     Initialize and load graph
     '''
     def __loadGraph(self):
+        print("Loading graph")
         source = [self.sourceLat, self.sourceLong]
         destination = [self.destLat, self.destLong]
 
@@ -31,6 +33,7 @@ class Graph:
     3. Return the route containing nodes
     '''
     def getPath(self):
+        print("Calculating route")
         if self.distanceRestriction < 0:
             print('Incorrect distance restriction')
             return None
@@ -39,6 +42,8 @@ class Graph:
         destNode = getNearestNodes(self.graph, self.destLong, self.destLat)
 
         shortestRoute = getShortestRoute(self.graph, origNode, destNode)
+        if shortestRoute is None:
+            return None
         shortestDistance = getRouteDistance(self.graph, shortestRoute)
 
         if self.pathType == 0:
@@ -61,9 +66,10 @@ class Graph:
         print('Djikstra runtime is ' + str(djikstraEndTime - startTime))
         print('AStar runtime is ' + str(astarEndTime - djikstraEndTime))
 
+        final_path = None
         # If no elevation option selected
         if isMinElevation == 0:
-            return djikstraPath
+            final_path = djikstraPath
         else:
             # Get route for both algorithms
             djikstraElev = getRouteElevation(self.graph, djikstraPath)
@@ -75,6 +81,15 @@ class Graph:
 
             # Compare and return most possible result
             if djikstraElev < astarElev:
-                return djikstraPath
+                final_path = djikstraPath
             else:
-                return astarPath
+                final_path = astarPath
+        
+        if final_path is not None:
+            routeDistance = round(getRouteDistance(self.graph, final_path), 4)
+            latLongRoute = getLatLongForRoute(self.graph, final_path)
+            routeElevation = round(getRouteElevation(self.graph, final_path), 4)
+
+            return (routeDistance, latLongRoute, routeElevation)
+        else:
+            return None

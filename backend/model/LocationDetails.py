@@ -6,6 +6,7 @@ from geopy.geocoders import Nominatim
     Returns string in format city, state, country
 '''
 def convertLocToStr(location):
+    print('Converting location object to string')
     locationArray = []
     if location['city'] != '':
         locationArray.append(location['city'])
@@ -46,6 +47,7 @@ def getCommonLocation(srcPoint, destPoint):
 
     commonLocation = {'country':'', 'state':'', 'city':''}
 
+    print('Checking if country, state and city are same')
     if srcCountry != destCountry:
         return commonLocation
     commonLocation['country'] = srcCountry

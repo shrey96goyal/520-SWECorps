@@ -1,3 +1,4 @@
+console.log("Retrieving map");
 // Create a map 
 var map = L.map('map').setView([42.343488, -72.502818], 15);
 
@@ -30,6 +31,7 @@ var result = document.getElementById('result');
 // Logic to zoom in/out depending on 1 marker or two markers on the map
 async function calcBoundingBox(bbox){
  if (location1 == null || location2 == null){
+  console.log("Calculating bounding box for setting focus on the map when one of the locations is not set");
     var poly = L.polygon([
       bbox.getSouthEast(),
       bbox.getNorthEast(),
@@ -42,6 +44,7 @@ async function calcBoundingBox(bbox){
     bottomRight = bbox.getSouthEast(); 
  }
  else{
+  console.log("Calculating bounding box for setting focus on the map when both the locations are set");
     topleft = location1.getNorthWest();
     topRight = location1.getNorthEast();
     bottomLeft = location1.getSouthWest();
@@ -66,6 +69,7 @@ var start_loc = L.Control.geocoder({
   var loc_name = x.geocode.name;
   start_input.value = loc_name;
   
+  console.log("Clear existing route on the map!");
   if (route != null){
     map.removeLayer(route);
   }
@@ -75,12 +79,13 @@ var start_loc = L.Control.geocoder({
   start_lat_lng = lat_long;
   var poly = await calcBoundingBox(bbox);
   map.fitBounds(poly.getBounds());
+
+  console.log("Reset the marker to new source location");
   if (marker1 != null)
     {
       map.removeLayer(marker1);
     }
   marker1 = new L.marker(lat_long);
-  // map.addLayer(marker1);
   marker1.addTo(map);
 }).addTo(map);
 
@@ -94,6 +99,7 @@ var end_loc = L.Control.geocoder({
   var loc_name = x.geocode.name;
   end_input.value = loc_name;
 
+  console.log("Clear existing route on the map!");
   if (route != null){
     map.removeLayer(route);
   }
@@ -103,20 +109,23 @@ var end_loc = L.Control.geocoder({
   end_lat_lng = lat_long;
   var poly = await calcBoundingBox(bbox);
   map.fitBounds(poly.getBounds());
+
+  console.log("Reset the marker to new target location");
   if (marker2 != null)
     {
       map.removeLayer(marker2);
     }
   marker2 = new L.marker(lat_long);
-  // map.addLayer(marker2);
   marker2.addTo(map);
 }).addTo(map);
 
 // Input validation for distance percentage textbox
 function isNumberKey(evt) {
   var charCode = (evt.which) ? evt.which : evt.keyCode
-  if (charCode > 31 && (charCode < 48 || charCode > 57))
+  if (charCode > 31 && (charCode < 48 || charCode > 57)){
+    console.log("Invalid character entered");
     return false;
+  }
   return true;
 }
 
@@ -138,7 +147,7 @@ const elevation = async () => {
       return;
     }
 
-    console.log("request")
+    console.log("Request parameters -> Elevation, Distance Percentage, Source, Destination")
     console.log(elevationValue, distancePer, start_lat_lng, end_lat_lng);
     requestURL = 'http://127.0.0.1:5000/path?elevation='+elevationValue+'&distance='+distancePer+'&src_lat='+start_lat_lng.lat+'&src_lang='+start_lat_lng.lng;
     requestURL += '&dest_lat='+end_lat_lng.lat+'&dest_lang='+end_lat_lng.lng;
@@ -176,6 +185,7 @@ const elevation = async () => {
       routePoints.push(point);
     }
 
+    console.log("Length of route in response -> ")
     console.log(routePoints.length);
     route = L.polyline(routePoints, {color: 'blue'});
     route.addTo(map);

@@ -9,6 +9,7 @@ G = ox.graph_from_place('Sutherland Shire Council', network_type='walk')
 Return the Node ID for input point from osmx
 '''
 def getNodeIDForPoint(G, latitude, longitude):
+    print("Getting node ID of nearest node in Graph")
     nodeID = ox.distance.nearest_nodes(G, longitude, latitude)
     return nodeID
 
@@ -16,6 +17,7 @@ def getNodeIDForPoint(G, latitude, longitude):
 Load and save the graph for location
 '''
 def getGraphForLocation(location):
+    print("Getting graph for location")
     assert type(location) is dict
     if not 'city' in location or location['city'] == '':
         return None
@@ -40,24 +42,28 @@ def getGraphForLocation(location):
 Return the nearest node from osmnx for given longitude, latitude
 '''
 def getNearestNodes(Graph, longitude, latitude):
+    print("Getting nearest node in Graph")
     return ox.nearest_nodes(Graph, longitude, latitude)
 
 '''
 Return shortest route from osmnx given two points
 '''
 def getShortestRoute(Graph, source, target):
+    print("Getting shortest route between input points")
     return ox.distance.shortest_path(Graph, source, target)
 
 '''
 Return the distance/edge length between two points
 '''
 def getEdgeLength(Graph, source, target):
+    print("Getting distance/edge length between two points")
     return Graph.get_edge_data(source, target)[0]['length']
 
 '''
 Return 0 if elevation is less than 0, otherwise return elevation
 '''
 def getEdgeAbsElevation(Graph, source, target):
+    print("Getting elevation between two points")
     elevation = Graph.get_edge_data(source, target)[0]['grade']
     if elevation < 0:
         return 0
@@ -67,6 +73,7 @@ def getEdgeAbsElevation(Graph, source, target):
 Return the total distance of the route
 '''
 def getRouteDistance(Graph, route):
+    print("Getting total distance along the route")
     numNodes = len(route)
     totalDistance = 0
     for i in range(0, numNodes-1):
@@ -77,6 +84,7 @@ def getRouteDistance(Graph, route):
 Returns the total elevation for the route
 '''
 def getRouteElevation(Graph, route):
+    print("Getting total elevation for the route")
     numNodes = len(route)
     totalElev = 0
     for i in range(0, numNodes - 1):
@@ -87,6 +95,7 @@ def getRouteElevation(Graph, route):
 Returns array of latitude, longitude for nodes along the route
 '''
 def getLatLongForRoute(Graph, route):
+    print("Getting array of latitude, longitude for nodes along the route")
     latLongArray = []
     for node in route:
         nodeData = Graph.nodes(data = True)[node]
